@@ -11,7 +11,12 @@
 </head>
 <body ng-app="myApp" ng-controller="SyncanoController">
 
-    <div></div>
+    <div>
+        <h1>Current Item List</h1>
+        <ul ng-repeat="data in dataList">
+            <li>{{data.id}}</li>
+        </ul>
+    </div>
 
 </body>
 </html>
