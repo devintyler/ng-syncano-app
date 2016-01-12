@@ -25,6 +25,9 @@ myApp.config(function ($stateProvider, $urlRouterProvider, syncanoServiceProvide
 myApp.controller('SyncanoController', function ($scope, syncanoService) {
 
     // **** dataList App ****
+    // initial $scope
+    $scope.initial = "";
+
     getData();
 
     function getData() {
@@ -38,8 +41,30 @@ myApp.controller('SyncanoController', function ($scope, syncanoService) {
             });
     }
 
-    $scope.addData = function(data){
+    function addData(item) {
+        syncanoService.class('testdata').dataobject().add(item)
+            .then(function(res){
+                console.log(res);
+                successAlert();
+                getData();
+            })
+            .catch(function(err){
+                $scope.error = err;
+            });
+    }
 
+    function successAlert() {
+        var alert = $('#dataListAddSuccess');
+        alert.fadeIn(1100);
+        alert.fadeOut(1100);
+    }
+
+    $scope.dataListAdd = function(item) {
+        console.log(angular.copy(item));
+
+        $('#dataListItem').val("");
+
+        addData(angular.copy(item));
     };
     // **** End dataList App ****
 
