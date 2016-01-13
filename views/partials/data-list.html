@@ -37,3 +37,81 @@
         </form>
     </div>
 </div>
+
+<br><br>
+
+<div class="row"> <!-- Explanation -->
+    <div class="small-10 small-offset-1 columns">
+        <h3>Brief Description</h3>
+
+        <p>
+            <i>The code described below can be found in the <code>js/app.js</code> file or <code>views/partials/</code> folder.</i>
+        </p>
+
+        <h4>App Load</h4>
+
+        <p class="textBlockQuote">
+            When the app loads, a Syncano API call is made to get the data for the initial list using the function <code>getData()</code>.
+            Then, <code>ng-repeat</code> is used to list all of the titles of the items.
+        </p>
+
+        <h4>Angular Modeling</h4>
+
+        <p class="textBlockQuote">
+            You'll notice that as you type a new item into the input field, an Angular model is watching that field
+            and immediately displaying the data. This is simply a style choice, but it shows you how Angular modeling works.
+            The specific code can be found in the <code>data-list.html</code> file.
+        </p>
+
+        <h4>Adding an Item</h4>
+
+        <p class="textBlockQuote">
+            When you finally press "Enter" or click the "Add" button, a few things are happening in the background.<br><br>
+
+            The form is using <code>ng-submit</code> to trigger the <code>dataListAdd()</code> function which is
+            a <code>$scope</code> function. This function is expecting the item you just entered as a parameter.
+            It then passes a couple checks, clears the input field (which clears the model), and sends the item data
+            to the <code>addItem()</code> function.<br><br>
+
+            This function then makes a Syncano API <code>add</code> call to add the item to your specified class. When this
+            call is completed, it sends back the data to the <code>dataListAdd()</code> function to be added to the list array.<br><br>
+
+            Then Angular takes care of the rest! A <code>$digest</code> is triggered and the results are displayed.<br><br>
+
+            <i>
+                Note: If the Syncano API call is unsuccessful, the view will not update and you should check your console
+                for error messages.
+            </i>
+        </p>
+
+        <h4>Removing an Item</h4>
+
+        <p class="textBlockQuote">
+            When you click the "Remove" button on the right side of each item, the process is similar to the item adding
+            process described above.<br><br>
+
+            Along with each title for each item, the item's Syncano <code>id</code> number is logged in the button itself.
+            This is necessary for the Syncano API <code>delete</code> call, since you need to pass it as a parameter.<br><br>
+
+            Each remove button has the <code>ng-click</code> method attached to it, which when clicked calls the
+            <code>dataListRemove()</code> function, another <code>$scope</code> function. This function takes two
+            parameters: the item object and the index in the array.<br><br>
+
+            This function then sends the <code>id</code> from the item to the <code>removeData()</code> function, which
+            then makes a Syncano API <code>delete</code> call. If this call is successful, the item is then removed
+            from the array and the <code>$scope</code> refreshes.<br><br>
+
+            <i>
+                Note: If the Syncano API call is unsuccessful, the view will not update and you should check your console
+                for error messages.
+            </i>
+        </p>
+
+        <h4>More Info</h4>
+
+        <p>
+            For more information on Syncano and specific API calls, visit the <a href="http://docs.syncano.io/" target="_blank">docs</a>.<br>
+            You can also ask me questions on Twitter! <a href="https://twitter.com/DevinViss" target="_blank">@devinviss</a>
+        </p>
+    </div>
+</div>
