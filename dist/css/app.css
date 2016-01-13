@@ -1,0 +1,49 @@
+/* Header */
+#headTitle {
+    padding-bottom: 1rem;
+}
+
+/* General */
+.textBlockQuote {
+    background-color: #def2f0;
+    padding: 1rem;
+}
+
+a {
+    transition: 0.5s;
+}
+
+/* Nav */
+.titleLink {
+
+}
+
+.appLink {
+    border-bottom: solid 2px #def2f0;
+    border-right: solid 2px #def2f0;
+    transition: 0.5s;
+}
+
+    .appLink:hover {
+        border-bottom: solid 2px #cc8b00;
+        transition: 0.5s;
+    }
+
+.appLink.last {
+    border-right: none;
+}
+
+/* dataList */
+#dataListItems {
+    list-style: none;
+    /*background-color: #def2f0;*/
+    padding: 1em 0 1em 0;
+}
+
+    #dataListItems li {
+        padding: 0.5rem 1.5rem 0.5rem 1.5rem;
+    }
+
+#dataListAddSuccess {
+    display: none;
+}
