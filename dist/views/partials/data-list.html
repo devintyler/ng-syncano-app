@@ -1,8 +1,26 @@
 <div class="row">
     <div class="small-10 small-offset-1 columns">
-        <h3>Current Item List</h3>
-        <ul ng-repeat="data in dataList">
-            <li>{{data.id}}</li>
+        <h3>Current List</h3>
+        <span id="dataListAddSuccess" class="callout">Item Added!</span>
+    </div>
+</div>
+
+<div class="row">
+    <div class="small-10 small-offset-1 columns">
+        <ul id="dataListItems">
+            <li ng-repeat="data in dataList">- {{data.title}}</li>
+            <li>{{dataListItem.title}}</li>
         </ul>
+    </div>
+</div>
+
+<div class="row">
+    <div class="small-10 small-offset-1 columns">
+        <div class="input-group">
+            <input id="dataListItem" class="input-group-field" type="text" placeholder="Item Name" ng-model="dataListItem.title">
+            <div class="input-group-button">
+                <input type="submit" class="button" value="Add" ng-click="dataListAdd(dataListItem); dataListItem = initial">
+            </div>
+        </div>
     </div>
 </div>

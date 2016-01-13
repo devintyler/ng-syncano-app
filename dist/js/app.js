@@ -1,15 +1,15 @@
 var myApp = angular.module('myApp', ['ui.router', 'ngSyncano']);
 
-myApp.config(function ($stateProvider, $urlRouterProvider, syncanoServiceProvider) {
+myApp.config(function ($stateProvider, $urlRouterProvider, syncanoServiceProvider) { // Syncano app configuration
     syncanoServiceProvider.configure({
-        apiKey: 'APIKEY', // public API key
+        apiKey: 'APIKEY', // public API key with 'ignore_acl'
         instance: 'INSTANCE'
     });
 
-    // For any unmatched url, redirect here
+    // For any unmatched url
     $urlRouterProvider.otherwise("/home/data-list");
 
-    // Now set up the states
+    // States
     $stateProvider
         .state('home', {
             url: "/home",
@@ -24,36 +24,14 @@ myApp.config(function ($stateProvider, $urlRouterProvider, syncanoServiceProvide
 
 myApp.controller('SyncanoController', function ($scope, syncanoService) {
 
-    // **************************************
-    // OPTION 1: Public API Key with User Key
-
-    var authSyncanoService = null; // instantiate user authenticated Syncano Service
-    var userDetails = { // used to log in below - to get user key
-        "username":"SyncanoUserName", // a user in your Syncano instance
-        "password":"SyncanoUserPassword" // not your Syncano account password, but the user in your instance
-    };
-
-    syncanoService.user().login(userDetails)
-        .then(function(res){
-            authSyncanoService = syncanoService;
-            authSyncanoService.config.userKey = res.user_key;
-            // then pass the new service to any function
-            // for example - getData();
-            // be sure to only make Syncano calls after this one returns if you need permission
-        })
-        .catch(function(err){
-            console.log(err);
-        });
-
-    // **************************************
-
-    // **************************************
-    // OPTION 2: Change the API Key in the configuration to a public API Key with the 'ignore_acl' flag
-    // **************************************
-
     // **** dataList App ****
+    // initial $scope
+    $scope.initial = "";
+
+    getData();
+
     function getData() {
-        syncanoService.class('testdata').dataobject().list()
+        syncanoService.class('CLASS').dataobject().list()
             .then(function(res){
                 // load the array of data objects into dataList
                 $scope.dataList = res.objects;
@@ -62,6 +40,32 @@ myApp.controller('SyncanoController', function ($scope, syncanoService) {
                 $scope.error = err;
             });
     }
+
+    function addData(item) {
+        syncanoService.class('CLASS').dataobject().add(item)
+            .then(function(res){
+                console.log(res);
+                successAlert();
+                getData();
+            })
+            .catch(function(err){
+                $scope.error = err;
+            });
+    }
+
+    function successAlert() {
+        var alert = $('#dataListAddSuccess');
+        alert.fadeIn(1100);
+        alert.fadeOut(1100);
+    }
+
+    $scope.dataListAdd = function(item) {
+        console.log(angular.copy(item));
+
+        $('#dataListItem').val("");
+
+        addData(angular.copy(item));
+    };
     // **** End dataList App ****
 
 });
