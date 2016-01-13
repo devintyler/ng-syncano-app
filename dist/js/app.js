@@ -7,7 +7,7 @@ myApp.config(function ($stateProvider, $urlRouterProvider, syncanoServiceProvide
     });
 
     // For any unmatched url
-    $urlRouterProvider.otherwise("/home/data-list");
+    $urlRouterProvider.otherwise("/home");
 
     // States
     $stateProvider
@@ -26,9 +26,39 @@ myApp.controller('SyncanoController', function ($scope, syncanoService) {
 
     // **** dataList App ****
     // initial $scope
-    $scope.initial = "";
+    $scope.initial = ""; // to later reset model
 
-    getData();
+    getData(); // get initial data
+
+    $scope.dataListAdd = function(item) {
+        if ($scope.dataList.length < 10){
+            var newItem = angular.copy(item);
+            $('#dataListItem').val(""); // clear the input
+
+            addData(newItem)
+                .then(function(res){
+                    if (res){
+                        $scope.dataList.push(res);
+                    } else {
+                        // TODO error
+                    }
+                });
+        } else {
+            alert('There are too many items! Delete some first to add more.');
+        }
+    };
+
+    $scope.dataListRemove = function(itemID, index) {
+        removeData(itemID)
+            .then(function(res){
+                if (res){
+                    $scope.dataList.splice(index, 1);
+                    $scope.$apply();
+                } else {
+                    // TODO error
+                }
+            });
+    };
 
     function getData() {
         syncanoService.class('CLASS').dataobject().list()
@@ -42,30 +72,34 @@ myApp.controller('SyncanoController', function ($scope, syncanoService) {
     }
 
     function addData(item) {
-        syncanoService.class('CLASS').dataobject().add(item)
+        return syncanoService.class('CLASS').dataobject().add(item)
             .then(function(res){
-                console.log(res);
                 successAlert();
-                getData();
+                return res;
             })
             .catch(function(err){
                 $scope.error = err;
+                return false;
+            });
+    }
+
+    function removeData(itemID) {
+        return syncanoService.class('CLASS').dataobject(itemID).delete()
+            .then(function(res){
+                return true;
+            })
+            .catch(function(err){
+                console.log(err);
+                return false;
             });
     }
 
     function successAlert() {
         var alert = $('#dataListAddSuccess');
-        alert.fadeIn(1100);
-        alert.fadeOut(1100);
+        alert.fadeIn(800);
+        alert.delay(500);
+        alert.fadeOut(800);
     }
-
-    $scope.dataListAdd = function(item) {
-        console.log(angular.copy(item));
-
-        $('#dataListItem').val("");
-
-        addData(angular.copy(item));
-    };
     // **** End dataList App ****
 
 });

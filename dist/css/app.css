@@ -47,3 +47,30 @@ a {
 #dataListAddSuccess {
     display: none;
 }
+
+.dataListRemove {
+    float: right;
+    color: white;
+    cursor: pointer;
+    width: 2em;
+    border-radius: 0.5em;
+    background-color: #e74c3c;
+    border-top: solid 1px indianred;
+    border-left: solid 2px indianred;
+    border-right: solid 2px indianred;
+    border-bottom: solid 3px indianred;
+    transition: 0.5s;
+    opacity: 0.7;
+}
+
+    .dataListRemove:hover {
+        border-radius: 2em;
+        color: red;
+        background-color: white;
+        transition: 0.5s;
+        opacity: 1;
+    }
+
+footer {
+    height: 5em;
+}
