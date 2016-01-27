@@ -95,9 +95,9 @@
 
             Each remove button has the <code>ng-click</code> method attached to it, which when clicked calls the
             <code>dataListRemove()</code> function, another <code>$scope</code> function. This function takes two
-            parameters: the item object and the index in the array.<br><br>
+            parameters: the item <code>id</code> and the index in the array.<br><br>
 
-            This function then sends the <code>id</code> from the item to the <code>removeData()</code> function, which
+            This function sends the <code>id</code> from the item to the <code>removeData()</code> function, which
             then makes a Syncano API <code>delete</code> call. If this call is successful, the item is then removed
             from the array and the <code>$scope</code> refreshes.<br><br>
 

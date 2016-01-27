@@ -33,6 +33,30 @@ a {
     border-right: none;
 }
 
+/* Global */
+.appBox {
+    position: absolute;
+    transition: all 0.8s;
+    -webkit-transition: all 0.8s;
+    -moz-transition: all 0.8s;
+    -o-transition: all 0.8s;
+}
+
+.appBox.ng-enter {
+    margin-top: -30px;
+    z-index: 8888;
+    opacity: 0;
+}
+.appBox.ng-enter.ng-enter-active {
+    margin-top: 0;
+    opacity: 1;
+}
+.appBox.ng-leave.ng-leave-active {
+    margin-top: 300px;
+    z-index: 9999;
+    opacity: 0;
+}
+
 /* dataList */
 #dataListItems {
     list-style: none;
