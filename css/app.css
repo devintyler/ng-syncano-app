@@ -95,6 +95,11 @@ a {
         opacity: 1;
     }
 
+#dataListFormButton:disabled {
+    color: black;
+    background-color: #def2f8;
+}
+
 footer {
     height: 5em;
 }
