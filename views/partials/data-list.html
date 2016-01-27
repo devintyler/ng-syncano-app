@@ -27,11 +27,11 @@
 
 <div class="row"> <!-- Add Form -->
     <div class="small-10 small-offset-1 columns">
-        <form ng-submit="dataListAdd(dataListItem); dataListItem = initial">
+        <form name="dataListForm" ng-submit="dataListAdd(dataListItem); dataListItem = initial">
             <div class="input-group">
-                <input id="dataListItem" class="input-group-field" type="text" placeholder="Item Name" ng-model="dataListItem.title">
+                <input id="dataListItem" class="input-group-field" type="text" placeholder="Item Name" ng-model="dataListItem.title" required />
                 <div class="input-group-button">
-                    <input type="submit" class="button" value="Add">
+                    <input id="dataListFormButton" ng-disabled="dataListForm.$invalid" type="submit" class="button" value="Add">
                 </div>
             </div>
         </form>

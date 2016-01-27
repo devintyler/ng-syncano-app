@@ -19,5 +19,8 @@
   "devDependencies": {
     "gulp": "^3.9.0",
     "gulp-replace": "^0.5.4"
+  },
+  "dependencies": {
+    "ng-syncano": "^2.0.0"
   }
 }
