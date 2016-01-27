@@ -4,6 +4,10 @@
 }
 
 /* General */
+.row {
+    max-width: 100rem;
+}
+
 .textBlockQuote {
     background-color: #def2f0;
     padding: 1rem;
