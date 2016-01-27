@@ -1,4 +1,4 @@
-var myApp = angular.module('myApp', ['ui.router', 'ngSyncano']);
+var myApp = angular.module('myApp', ['ui.router', 'ngSyncano', 'ngAnimate']);
 
 myApp.config(function ($stateProvider, $urlRouterProvider, syncanoServiceProvider) { // Syncano app configuration
     syncanoServiceProvider.configure({
