@@ -1,0 +1,112 @@
+<div class="row"> <!-- Title -->
+    <div class="small-10 small-offset-1 columns">
+        <h3>User Authentication</h3>
+    </div>
+</div>
+
+<br>
+
+<!-- Sign Up Form -->
+<div class="row">
+    <div class="small-10 small-offset-1 columns" ng-if="!signUpSuccess">
+        <div class="contentBox">
+            <h4>Sign Up</h4>
+            <form name="signUpForm" ng-submit="signUpSubmit(this)" novalidate>
+
+                <label>Name</label>
+                <input id="signUpName" name="signUpName" ng-model="signUp.name" type="text" required>
+                <div class="errorMessage" ng-messages="signUpForm.signUpName.$error" ng-if="signUpForm.signUpName.$touched">
+                    <p ng-message="required">Your name is required.</p>
+                </div>
+
+                <label for="signUpEmail">Email</label>
+                <input id="signUpEmail" name="signUpEmail" ng-model="signUp.email" type="email" required>
+                <div class="errorMessage" ng-messages="signUpForm.signUpEmail.$error" ng-if="signUpForm.signUpEmail.$touched">
+                    <p ng-message="email">Please enter a correct email.</p>
+                    <p ng-message="required">Your email is required.</p>
+                </div>
+
+                <label for="signUpPassword">Password</label>
+                <input id="signUpPassword" name="signUpPassword" ng-model="signUp.password" type="password" ng-minlength="8" ng-maxlength="16"  required>
+                <div class="errorMessage" ng-messages="signUpForm.signUpPassword.$error" ng-if="signUpForm.signUpPassword.$touched">
+                    <p ng-message="minlength">Your password is too short. (min 8)</p>
+                    <p ng-message="maxlength">Your password is too long. (max 16)</p>
+                    <p ng-message="required">Your password is required.</p>
+                </div>
+
+                <br>
+
+                <button id="signUpSubmit" class="button" type="submit" ng-disabled="signUpForm.$invalid">Sign Up!</button>
+            </form>
+        </div>
+    </div>
+    <div class="small-10 small-offset-1 columns" ng-if="signUpSuccess">
+        <div class="contentBox">
+            <h3 class="text-center">Success!</h3>
+            <p class="text-center">You have successfully signed up.</p>
+            <img class="successMark" src="http://cliparts.co/cliparts/pio/dBR/piodBRjiE.png" />
+            <br>
+            <a class="text-center" ng-click="toggleSignUpSuccess()">Sign up another?</a>
+        </div>
+    </div>
+</div>
+
+<br>
+
+<!-- Log In Form -->
+<div class="row">
+    <div class="small-10 small-offset-1 columns" ng-if="!logInSuccess">
+        <div class="contentBox">
+            <h4>Log In</h4>
+            <form name="logInForm" ng-submit="logInSubmit(this)" novalidate>
+                <label for="logInEmail">Email</label>
+                <input id="logInEmail" name="logInEmail" ng-model="logIn.email" type="email" required>
+
+                <div class="errorMessage" ng-messages="logInForm.logInEmail.$error" ng-if="logInForm.logInEmail.$touched">
+                    <p ng-message="email">Please enter a correct email.</p>
+                    <p ng-message="required">Your email is required.</p>
+                </div>
+
+                <label for="logInPassword">Password</label>
+                <input id="logInPassword" name="logInPassword" ng-model="logIn.password" type="password" ng-minlength="8" ng-maxlength="16"  required>
+
+                <div class="errorMessage" ng-messages="logInForm.logInPassword.$error" ng-if="logInForm.logInPassword.$touched">
+                    <p ng-message="minlength">Your password is too short. (min 8)</p>
+                    <p ng-message="maxlength">Your password is too long. (max 16)</p>
+                    <p ng-message="required">Your password is required.</p>
+                </div>
+
+                <br>
+
+                <button id="logInSubmit" class="button" type="submit" ng-disabled="logInForm.$invalid">Log In</button>
+            </form>
+        </div>
+    </div>
+    <div class="small-10 small-offset-1 columns" ng-if="logInSuccess">
+        <div class="contentBox">
+            <h3 class="text-center">Success!</h3>
+            <p class="text-center">You have successfully signed up.</p>
+
+            <!-- TODO display logged in info -->
+        </div>
+    </div>
+</div>
+
+<br><br>
+
+<div class="row"> <!-- Explanation -->
+    <div class="small-10 small-offset-1 columns">
+        <h3>Brief Description</h3>
+
+        <p>
+            <i>The code described below can be found in the <code>js/app.js</code> file or <code>views/partials/</code> folder.</i>
+        </p>
+
+        <h4>App Load</h4>
+
+        <p class="textBlockQuote">
+            When the app loads, a Syncano API call is made to get the data for the initial list using the function <code>getData()</code>.
+            Then, <code>ng-repeat</code> is used to list all of the titles of the items.
+        </p>
+    </div>
+</div>
