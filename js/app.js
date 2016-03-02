@@ -1,7 +1,7 @@
-var myApp = angular.module('myApp', ['ui.router', 'ngSyncano']);
+var myApp = angular.module('myApp', ['ui.router', 'ngSyncano', 'ngAnimate', 'ngTouch']);
 
-myApp.config(function ($stateProvider, $urlRouterProvider, syncanoServiceProvider) { // Syncano app configuration
-    syncanoServiceProvider.configure({
+myApp.config(function ($stateProvider, $urlRouterProvider, syncanoConfigProvider) { // Syncano app configuration
+    syncanoConfigProvider.configure({
         apiKey: 'c261b092751f882fc73f28f6e672adf50626d0a7', // public API key with 'ignore_acl'
         instance: 'twilight-bird-3277'
     });
@@ -24,82 +24,92 @@ myApp.config(function ($stateProvider, $urlRouterProvider, syncanoServiceProvide
 
 myApp.controller('SyncanoController', function ($scope, syncanoService) {
 
-    // **** dataList App ****
-    // initial $scope
-    $scope.initial = ""; // to later reset model
+    var syncano = null;
 
-    getData(); // get initial data
+    syncanoService.getSyncano()
+        .then(function(res){
+            syncano = res;
 
-    $scope.dataListAdd = function(item) {
-        if ($scope.dataList.length < 10){
-            var newItem = angular.copy(item);
-            $('#dataListItem').val(""); // clear the input
+            // **** dataList App ****
+            // initial $scope
+            $scope.initial = ""; // to later reset model
 
-            addData(newItem)
-                .then(function(res){
-                    if (res){
-                        $scope.dataList.push(res);
-                    } else {
-                        // TODO error
-                    }
-                });
-        } else {
-            alert('There are too many items! Delete some first to add more.');
-        }
-    };
+            getData(); // get initial data
 
-    $scope.dataListRemove = function(itemID, index) {
-        removeData(itemID)
-            .then(function(res){
-                if (res){
-                    $scope.dataList.splice(index, 1);
-                    $scope.$apply();
+            $scope.dataListAdd = function(item) {
+                if ($scope.dataList.length < 10){
+                    var newItem = angular.copy(item);
+                    $('#dataListItem').val(""); // clear the input
+
+                    addData(newItem)
+                        .then(function(res){
+                            if (res){
+                                $scope.dataList.push(res);
+                            } else {
+                                // TODO error
+                            }
+                        });
                 } else {
-                    // TODO error
+                    alert('There are too many items! Delete some first to add more.');
                 }
-            });
-    };
+            };
 
-    function getData() {
-        syncanoService.class('testdata').dataobject().list()
-            .then(function(res){
-                // load the array of data objects into dataList
-                $scope.dataList = res.objects;
-            })
-            .catch(function(err){
-                $scope.error = err;
-            });
-    }
+            $scope.dataListRemove = function(itemID, index) {
+                removeData(itemID)
+                    .then(function(res){
+                        if (res){
+                            $scope.dataList.splice(index, 1);
+                            $scope.$apply();
+                        } else {
+                            // TODO error
+                        }
+                    });
+            };
 
-    function addData(item) {
-        return syncanoService.class('testdata').dataobject().add(item)
-            .then(function(res){
-                successAlert();
-                return res;
-            })
-            .catch(function(err){
-                $scope.error = err;
-                return false;
-            });
-    }
+            function getData() {
+                syncano.class('testdata').dataobject().list()
+                    .then(function(res){
+                        // load the array of data objects into dataList
+                        $scope.dataList = res.objects;
+                    })
+                    .catch(function(err){
+                        $scope.error = err;
+                    });
+            }
 
-    function removeData(itemID) {
-        return syncanoService.class('testdata').dataobject(itemID).delete()
-            .then(function(res){
-                return true;
-            })
-            .catch(function(err){
-                console.log(err);
-                return false;
-            });
-    }
+            function addData(item) {
+                return syncano.class('testdata').dataobject().add(item)
+                    .then(function(res){
+                        successAlert();
+                        return res;
+                    })
+                    .catch(function(err){
+                        $scope.error = err;
+                        return false;
+                    });
+            }
 
-    function successAlert() {
-        var alert = $('#dataListAddSuccess');
-        alert.fadeIn(800);
-        alert.delay(500);
-        alert.fadeOut(800);
-    }
-    // **** End dataList App ****
+            function removeData(itemID) {
+                return syncano.class('testdata').dataobject(itemID).delete()
+                    .then(function(res){
+                        return true;
+                    })
+                    .catch(function(err){
+                        console.log(err);
+                        return false;
+                    });
+            }
+
+            function successAlert() {
+                var alert = $('#dataListAddSuccess');
+                alert.fadeIn(800);
+                alert.delay(500);
+                alert.fadeOut(800);
+            }
+            // **** End dataList App ****
+        })
+        .catch(function(err){
+            console.log(err);
+        });
 
 });
