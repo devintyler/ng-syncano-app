@@ -139,11 +139,21 @@ a {
     margin-right: auto;
 }
 
+#logOutSubmit {
+    width: 70%;
+    margin-left:15%;
+    margin-right: auto;
+}
+
 .successMark {
     display: block;
     width: 200px;
     height: 200px;
     margin: 0 auto;
+}
+
+.userProfileText {
+    color: lightseagreen;
 }
 
 
